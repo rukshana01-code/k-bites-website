@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍜 K-Bites | Seoul on Every Bite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    *, ::after, ::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+ 
+    :root {
+      --red: #E8341A;
+      --orange: #FF7F11;
+      --peach: #faad96;
+      --light-peach: #fff3ee;
+      --dark: #1a1a1a;
+      --mid: #555;
+      --white: #ffffff;
+    }
+ 
+    html {
+      scroll-behavior: smooth;
+    }
+ 
+    body {
+      background-color: var(--white);
+      font-family: 'Nunito', sans-serif;
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+ 
+   
+    /* NAV */
+    
+    .menu {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #f0e0d8;
+      padding: 0 80px;
+    }
+ 
+    .nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+ 
+    .nav .logo h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--red);
+      letter-spacing: 2px;
+    }
+ 
+    .nav .logo b {
+      color: var(--dark);
+    }
+ 
+    .nav ul {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+ 
+    .nav ul li a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 15px;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+    }
+ 
+    .nav ul li a:hover,
+    .nav ul li a.active {
+      color: var(--red);
+    }
+ 
+    .nav ul li a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--peach);
+      border-radius: 2px;
+    }
+ 
+    .nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+ 
+    .signin {
+      background: transparent;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      color: var(--dark);
+      transition: color 0.2s;
+    }
+ 
+    .signin:hover {
+      color: var(--red);
+    }
+ 
+    .signup {
+      background-color: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+ 
+    .signup:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+ 
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+    }
+ 
+    .hamburger span {
+      width: 26px;
+      height: 3px;
+      background: var(--dark);
+      border-radius: 3px;
+      transition: all 0.3s;
+    }
+ 
+    
+    /* HERO */
+  
+    .grid {
+      padding: 0 80px;
+    }
+ 
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 90px 0 60px;
+      align-items: center;
+    }
+ 
+    .content-left .info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      line-height: 1.05;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+ 
+    .content-left .info p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 36px;
+      max-width: 400px;
+    }
+ 
+    .content-left button {
+      padding: 14px 32px;
+      background-color: var(--red);
+      color: var(--white);
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+ 
+    .content-left button:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+    }
+ 
+    .content-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+ 
+    .content-right img {
+      width: 380px;
+      max-width: 100%;
+      height: auto;
+      animation: rotate 12s linear infinite;
+      filter: drop-shadow(0 16px 40px rgba(232,52,26,0.18));
+      user-select: none;
+    }
+ 
+    @keyframes rotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+ 
+   
+    /* POPULAR DISHES */
+    
+    .category {
+      padding: 80px 80px 60px;
+      background: var(--light-peach);
+    }
+ 
+    .category .list-items h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 80px;
+      position: relative;
+      display: inline-block;
+    }
+ 
+    .category .list-items h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+ 
+    .card-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+ 
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 14px 14px 18px;
+      position: relative;
+      border: 1.5px solid #f5d4c8;
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: visible;
+      margin-top: 70px;
+    }
+ 
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(232,52,26,0.12);
+    }
+ 
+    .card-img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      position: absolute;
+      top: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 10px 28px rgba(250,173,150,0.55);
+      background: var(--white);
+      border: 3px solid var(--white);
+    }
+ 
+    .food-title {
+      padding: 75px 0 10px;
+      text-align: center;
+    }
+ 
+    .food-title h1 {
+      font-size: 15px;
+      font-weight: 800;
+    }
+ 
+    .desc-food p {
+      font-size: 12.5px;
+      text-align: center;
+      color: var(--mid);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+ 
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+ 
+    .price span {
+      font-weight: 800;
+      color: var(--dark);
+    }
+ 
+    .plus-icon {
+      color: var(--red);
+      font-size: 22px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+ 
+    .plus-icon:hover {
+      transform: scale(1.2);
+    }
+ 
+    
+    /* SERVICES */
+    
+    .services {
+      padding: 80px 80px 60px;
+      text-align: center;
+    }
+ 
+    .services h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 48px;
+      position: relative;
+      display: inline-block;
+    }
+ 
+    .services h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+ 
+    .service-box {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+ 
+    .service-box .box {
+      width: 220px;
+      padding: 32px 20px;
+      border-radius: 16px;
+      background: var(--light-peach);
+      border: 1.5px solid #f5d4c8;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+ 
+    .service-box .box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(232,52,26,0.1);
+    }
+ 
+    .service-box .box i {
+      font-size: 40px;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+ 
+    .service-box .box h4 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+ 
+    .service-box .box p {
+      font-size: 13px;
+      color: var(--mid);
+    }
+ 
+   
+    /* ABOUT */
+   
+    .about {
+      padding: 80px 80px 60px;
+      background: var(--light-peach);
+    }
+ 
+    .about-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+    }
+ 
+    .about-text h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      position: relative;
+      display: inline-block;
+    }
+ 
+    .about-text h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+ 
+    .about-text p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--mid);
+      max-width: 480px;
+      margin-top: 12px;
+    }
+ 
+    .about img {
+      width: 300px;
+      max-width: 100%;
+      filter: drop-shadow(0 12px 32px rgba(232,52,26,0.15));
+      animation: rotate 12s linear infinite;
+    }
+ 
+    
+    /* GALLERY */
+   
+    .gallery {
+      padding: 80px 80px 60px;
+      text-align: center;
+    }
+ 
+    .gallery h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 48px;
+      position: relative;
+      display: inline-block;
+    }
+ 
+    .gallery h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+ 
+    .gallery-box {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+ 
+    .gallery-box img {
+      width: 100%;
+      border-radius: 14px;
+      object-fit: cover;
+      aspect-ratio: 1;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+ 
+    .gallery-box img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 32px rgba(232,52,26,0.15);
+    }
+ 
+    /* FOOTER */
+   
+    footer {
+      padding: 36px 80px;
+      background-color: var(--red);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+ 
+    footer h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+ 
+    footer p {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+ 
+    /* SCROLLBAR */
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      background-color: var(--red);
+    }
+ 
+    
+    /* RESPONSIVE — Tablet */
+    
+    @media (max-width: 1024px) {
+      .menu, .grid, .category, .services, .about, .gallery { padding-left: 40px; padding-right: 40px; }
+      footer { padding: 28px 40px; }
+      .card-list { grid-template-columns: repeat(2, 1fr); }
+      .gallery-box { grid-template-columns: repeat(2, 1fr); }
+    }
+ 
+    
+    /* RESPONSIVE — Mobile */
+    
+    @media (max-width: 768px) {
+      .menu { padding: 0 20px; }
+      .grid, .category, .services, .about, .gallery { padding-left: 20px; padding-right: 20px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+ 
+      /* Nav mobile */
+      .nav { flex-wrap: wrap; padding: 16px 0; gap: 0; position: relative; }
+      .nav .logo, .hamburger { display: flex; }
+      .hamburger { display: flex; }
+ 
+      .nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 10px 0;
+        border-top: 1px solid #f0e0d8;
+        margin-top: 12px;
+      }
+ 
+      .nav ul.open { display: flex; }
+ 
+      .nav ul li a {
+        display: block;
+        padding: 10px 0;
+        font-size: 16px;
+      }
+ 
+      .nav-btns {
+        display: none;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 8px 0 4px;
+        border-top: 1px solid #f0e0d8;
+        gap: 8px;
+      }
+ 
+      .nav-btns.open { display: flex; }
+ 
+      /* Hero mobile */
+      .content {
+        grid-template-columns: 1fr;
+        padding: 50px 0 40px;
+        text-align: center;
+        gap: 30px;
+      }
+ 
+      .content-left .info h2 { font-size: 52px; }
+      .content-left .info p { max-width: 100%; }
+      .content-right img { width: 260px; }
+ 
+      /* Cards mobile */
+      .card-list { grid-template-columns: 1fr 1fr; gap: 20px; }
+ 
+      /* Services mobile */
+      .service-box { flex-direction: column; align-items: center; }
+ 
+      /* About mobile */
+      .about-content { flex-direction: column; text-align: center; }
+      .about-text p { max-width: 100%; }
+      .about img { margin: 0 auto; }
+ 
+      /* Gallery mobile */
+      .gallery-box { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+ 
+    @media (max-width: 420px) {
+      .card-list { grid-template-columns: 1fr; }
+      .gallery-box { grid-template-columns: 1fr; }
+      .content-left .info h2 { font-size: 42px; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- NAV -->
+  <section class="menu">
+    <nav class="nav">
+      <div class="logo">
+        <h1>🍜K-<b>Bites</b></h1>
+      </div>
+ 
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+ 
+      <ul id="nav-links">
+        <li><a class="active" href="#">Home</a></li>
+        <li><a href="#popular">Menu</a></li>
+        <li><a href="#service">Service</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+ 
+      <div class="nav-btns" id="nav-btns">
+        <input class="signin" type="button" value="Sign In">
+        <input class="signup" type="button" value="Sign Up">
+      </div>
+    </nav>
+  </section>
+ 
+  <!-- HERO -->
+  <section class="grid">
+    <div class="content">
+      <div class="content-left">
+        <div class="info">
+          <h2>Order your best<br>Food anytime</h2>
+          <p>Hey, our delicious food is waiting for you.<br>We are always near to you with fresh items of food.</p>
+        </div>
+        <button>Explore Food</button>
+      </div>
+      <div class="content-right">
+        <img src="images/er.png" alt="Featured Korean dish">
+      </div>
+    </div>
+  </section>
+ 
+  <!-- POPULAR DISHES -->
+  <section class="category" id="popular">
+    <div class="list-items">
+      <h3>Popular Dishes</h3>
+      <div class="card-list">
+ 
+        <div class="card">
+          <img class="card-img" src="images/bowl of fried chicken.png" alt="Korean Fried Chicken">
+          <div class="food-title"><h1>Korean Fried Chicken</h1></div>
+          <div class="desc-food">
+            <p>Crunchy Korean-style fried chicken glazed with spicy and sweet sauce, full of bold flavors.</p>
+          </div>
+          <div class="price">
+            <span>$10.99</span>
+            <span><i class="bx bxs-plus-circle plus-icon"></i></span>
+          </div>
+        </div>
+ 
+        <div class="card">
+          <img class="card-img" src="images/vecteezy_bibimbap.png" alt="Bibimbap">
+          <div class="food-title"><h1>Bibimbap</h1></div>
+          <div class="desc-food">
+            <p>Rice bowl with vegetables, egg, and spicy gochujang sauce.</p>
+          </div>
+          <div class="price">
+            <span>$9.99</span>
+            <span><i class="bx bxs-plus-circle plus-icon"></i></span>
+          </div>
+        </div>
+ 
+        <div class="card">
+          <img class="card-img" src="images/vecteezy_samgyeopsal-with_26773781.png" alt="Samgyeopsal">
+          <div class="food-title"><h1>Samgyeopsal</h1></div>
+          <div class="desc-food">
+            <p>Grilled pork belly served with fresh lettuce wraps and dipping sauce.</p>
+          </div>
+          <div class="price">
+            <span>$14.99</span>
+            <span><i class="bx bxs-plus-circle plus-icon"></i></span>
+          </div>
+        </div>
+ 
+        <div class="card">
+          <img class="card-img" src="images/vecteezy_tteokbokki-with_26773836.png" alt="Tteokbokki">
+          <div class="food-title"><h1>Tteokbokki</h1></div>
+          <div class="desc-food">
+            <p>Spicy rice cakes simmered in rich Korean chili sauce.</p>
+          </div>
+          <div class="price">
+            <span>$8.99</span>
+            <span><i class="bx bxs-plus-circle plus-icon"></i></span>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SERVICES -->
+  <section id="service" class="services">
+    <h3>Our Services</h3>
+    <div class="service-box">
+      <div class="box">
+        <i class='bx bxs-truck'></i>
+        <h4>Fast Delivery</h4>
+        <p>Quick delivery right to your doorstep.</p>
+      </div>
+      <div class="box">
+        <i class='bx bxs-food-menu'></i>
+        <h4>Fresh Food</h4>
+        <p>Always fresh, hot, and made to order.</p>
+      </div>
+      <div class="box">
+        <i class='bx bxs-star'></i>
+        <h4>Best Quality</h4>
+        <p>Top-tier authentic Korean taste experience.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="about-content">
+      <div class="about-text">
+        <h3>About K-Bites</h3>
+        <p>K-Bites brings authentic Korean flavors straight to your table. We take pride in preparing traditional dishes with a modern twist — using fresh ingredients and time-honored recipes that keep every bite unforgettable.</p>
+      </div>
+      <img src="images/er.png" alt="About K-Bites">
+    </div>
+  </section>
+ 
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery">
+    <h3>Gallery</h3>
+    <div class="gallery-box">
+      <img src="images/bowl of fried chicken.png" alt="Fried Chicken">
+      <img src="images/vecteezy_bibimbap.png" alt="Bibimbap">
+      <img src="images/vecteezy_samgyeopsal-with_26773781.png" alt="Samgyeopsal">
+      <img src="images/vecteezy_tteokbokki-with_26773836.png" alt="Tteokbokki">
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <h2>🍜 K-Bites</h2>
+    <p>© 2026 K-Bites. All Rights Reserved.</p>
+  </footer>
+ 
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    const navBtns   = document.getElementById('nav-btns');
+ 
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navBtns.classList.toggle('open');
+    });
+ 
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        navLinks.classList.toggle('open');
+        navBtns.classList.toggle('open');
+      }
+    });
+  </script>
+ 
+</body>
+</html>
